@@ -36,14 +36,12 @@
 
 
 /* Inclusions */
-#include "../../fw_common.h"             /* general declarations */
+#include "fw_common.h"             /* general declarations */
 
-#include "../../hal/tmr.h"                /* component TMR header file */
-#include "../../hal/pwm.h"                /* component PWM header file */
-#include "../../hal/port.h"               /* component PORT header file */
-
-#include "../rtos/rtos.h"               /* component RTOS header file */
-
+#include "tmr.h"                /* component TMR header file */
+#include "pwm.h"                /* component PWM header file */
+#include "port.h"               /* component PORT header file */
+#include "rtos.h"               /* component RTOS header file */
 #include "outch.h"              /* component header file */
 
 
@@ -425,6 +423,19 @@ EXPORTED void OUTCH_PeriodicTask(void)
                      * in order to update all channels simultaneously */
                     /* reset channel output */
                     resetChannelOutput(ChIndex_u8);
+                }
+            }
+            else
+            {
+                /* update eventual illumination level */
+                if(CHECK_TURN_ON_REQ(ChIndex_u8))
+                {
+                    /* set channel output */
+                    setChannelOutput(ChIndex_u8);
+                }
+                else
+                {
+                    /* do nothing */
                 }
             }
         }

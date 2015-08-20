@@ -22,36 +22,61 @@
 */
 
 /*
- * This file pwm.h represents the header file of the PWM component.
+ * This file app_task_c.c represents the source file of the demo application task C.
  *
  * Author : Marco Russi
  *
  * Evolution of the file:
- * 06/08/2015 - File created - Marco Russi
+ * 20/08/2015 - File created - Marco Russi
  *
 */
 
 
+
+
+/* ------------ Inclusion files ---------------- */
+#include "p32mx795f512l.h"
 #include "fw_common.h"
+#include "outch.h"
+#include "rtos.h"
 
 
-/* PWM channels enum */
-typedef enum
+
+
+/* ------------ Local functions prototypes ---------------- */
+LOCAL void PeriodicCallback( void );
+
+
+
+
+/* ------------ Exported functions ---------------- */
+
+/* Demo application task C init function */
+EXPORTED void APP_TaskC_Init( void )
 {
-    PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_1 = PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_2,
-    PWM_KE_CHANNEL_3,
-    PWM_KE_CHANNEL_4,
-    PWM_KE_LAST_CHANNEL = PWM_KE_CHANNEL_4,
-    PWM_KE_CHANNEL_CHECK
-} PWM_ke_Channels;
+    OUTCH_SetIlluminationLevel(OUTCH_KE_ILL_CH_3, OUTCH_KE_ILL_LEVEL_1);
+
+    OUTCH_SetChannelStatus(OUTCH_KE_ILL_CH_3, OUTCH_KE_CH_TURN_ON);
+
+    RTOS_SetCallback(RTOS_CB_ID_1, RTOS_CB_TYPE_PERIODIC, 1500, &PeriodicCallback);
+}
+
+
+/* Demo application task C init function */
+EXPORTED void APP_TaskC_PeriodicTask( void )
+{
+    //nothing
+}
 
 
 
 
-EXTERN void PWM_Init( void );
+/* ------------ Local functions implementation ---------------- */
+LOCAL void PeriodicCallback( void )
+{
+    OUTCH_SetChannelStatus(OUTCH_KE_ILL_CH_3, OUTCH_KE_CH_TOGGLE);
+}
 
-EXTERN void PWM_SetFrequency( uint32 );
 
-EXTERN void PWM_SetDutyCycle( PWM_ke_Channels, uint16 );
+
+/* End of file */

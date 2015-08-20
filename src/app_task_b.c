@@ -22,36 +22,44 @@
 */
 
 /*
- * This file pwm.h represents the header file of the PWM component.
+ * This file app_task_b.c represents the source file of the demo application task B.
  *
  * Author : Marco Russi
  *
  * Evolution of the file:
- * 06/08/2015 - File created - Marco Russi
+ * 20/08/2015 - File created - Marco Russi
  *
 */
 
 
+
+
+/* ------------ Inclusion files ---------------- */
+#include "p32mx795f512l.h"
 #include "fw_common.h"
+#include "outch.h"
 
 
-/* PWM channels enum */
-typedef enum
+
+
+/* ------------ Exported functions ---------------- */
+
+/* Demo application task B init function */
+EXPORTED void APP_TaskB_Init( void )
 {
-    PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_1 = PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_2,
-    PWM_KE_CHANNEL_3,
-    PWM_KE_CHANNEL_4,
-    PWM_KE_LAST_CHANNEL = PWM_KE_CHANNEL_4,
-    PWM_KE_CHANNEL_CHECK
-} PWM_ke_Channels;
+    OUTCH_SetIlluminationLevel(OUTCH_KE_ILL_CH_2, OUTCH_KE_ILL_LEVEL_5);
+
+    OUTCH_SetChannelStatus(OUTCH_KE_ILL_CH_2, OUTCH_KE_CH_BLINKING);
+}
+
+
+/* Demo application task B init function */
+EXPORTED void APP_TaskB_PeriodicTask( void )
+{
+    // do nothing
+}
 
 
 
 
-EXTERN void PWM_Init( void );
-
-EXTERN void PWM_SetFrequency( uint32 );
-
-EXTERN void PWM_SetDutyCycle( PWM_ke_Channels, uint16 );
+/* End of file */

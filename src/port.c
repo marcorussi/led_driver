@@ -33,7 +33,7 @@
 
 
 #include "p32mx795f512l.h"
-#include "../fw_common.h"
+#include "fw_common.h"
 
 #include "port.h"
 

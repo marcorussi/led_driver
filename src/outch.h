@@ -34,13 +34,13 @@
 #ifndef _OUTCH_INCLUDED_         /* switch to read the header file only */
 #define _OUTCH_INCLUDED_         /* one time */
 
-#include "../../fw_common.h"             /* general declarations */
+#include "fw_common.h"             /* general declarations */
 
 
 /* Blinking period in ms */
 #define OUTCH_BLINK_PERIOD_VALUE_MS     ((uint16)1000)  /* 1000 ms */
 /* Blinking DC in % */
-#define OUTCH_BLINK_DC_VALUE_PERCENT    ((uint16)20)    /* 50 % */
+#define OUTCH_BLINK_DC_VALUE_PERCENT    ((uint16)20)    /* 20 % */
 
 
 /* Exported Types */

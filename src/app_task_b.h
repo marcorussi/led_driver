@@ -22,36 +22,31 @@
 */
 
 /*
- * This file pwm.h represents the header file of the PWM component.
+ * This file app_task_b.h represents the inclusion file of the demo application task B.
  *
  * Author : Marco Russi
  *
  * Evolution of the file:
- * 06/08/2015 - File created - Marco Russi
+ * 20/08/2015 - File created - Marco Russi
  *
 */
 
 
+
+
+/* ------------ Inclusion files ---------------- */
 #include "fw_common.h"
 
 
-/* PWM channels enum */
-typedef enum
-{
-    PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_1 = PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_2,
-    PWM_KE_CHANNEL_3,
-    PWM_KE_CHANNEL_4,
-    PWM_KE_LAST_CHANNEL = PWM_KE_CHANNEL_4,
-    PWM_KE_CHANNEL_CHECK
-} PWM_ke_Channels;
+
+
+/* ------------ Exported functions prototypes ---------------- */
+
+EXTERN void APP_TaskB_Init          ( void );
+EXTERN void APP_TaskB_PeriodicTask  ( void );
 
 
 
 
-EXTERN void PWM_Init( void );
+/* End of file */
 
-EXTERN void PWM_SetFrequency( uint32 );
-
-EXTERN void PWM_SetDutyCycle( PWM_ke_Channels, uint16 );

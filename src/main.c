@@ -22,7 +22,7 @@
 */
 
 /*
- * This file pwm.h represents the header file of the PWM component.
+ * This file main.c represents the entry point of the software.
  *
  * Author : Marco Russi
  *
@@ -31,27 +31,68 @@
  *
 */
 
-
+#include <stdbool.h>
+#include <stdlib.h>
+#include "p32mx795f512l.h"
 #include "fw_common.h"
 
+#include "int.h"
+#include "rtos.h"
+#include "rtos_cfg.h"
 
-/* PWM channels enum */
-typedef enum
+
+/* PIC32 ESK configuration fuses */
+#pragma config FPLLODIV = DIV_1, FPLLMUL = MUL_20, FPLLIDIV = DIV_2, FWDTEN = OFF, FPBDIV = DIV_2, POSCMOD = XT, FNOSC = PRIPLL, CP = OFF
+#pragma config FMIIEN = OFF, FETHIO = OFF	// external PHY in RMII/alternate configuration
+
+
+
+
+/* init port pins function */
+LOCAL void initPins ( void )
 {
-    PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_1 = PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_2,
-    PWM_KE_CHANNEL_3,
-    PWM_KE_CHANNEL_4,
-    PWM_KE_LAST_CHANNEL = PWM_KE_CHANNEL_4,
-    PWM_KE_CHANNEL_CHECK
-} PWM_ke_Channels;
+    /* temporary set all digital */
+    AD1PCFG = 0xFFFF;
+
+    /* Switches */
+    TRISDbits.TRISD6 = 1;
+    TRISDbits.TRISD7 = 1;
+    TRISDbits.TRISD13 = 1;
+
+    /* Enable pullups on the Switch ports */
+    CNENbits.CNEN15 = 1;
+    CNENbits.CNEN16 = 1;
+    CNENbits.CNEN19 = 1;
+
+    /* LEDs pins as output */
+    /* init in OUTCH_Init() */
+}
 
 
 
 
-EXTERN void PWM_Init( void );
+/* main function */
+int main ( void )
+{
+    /* init port pins */
+    initPins();
 
-EXTERN void PWM_SetFrequency( uint32 );
+    /* init interrupts */
+    INT_EnableInt();
 
-EXTERN void PWM_SetDutyCycle( PWM_ke_Channels, uint16 );
+    /* start RTOS */
+    RTOS_startOperation(RTOS_CFG_KE_FIRST_STATE);
+
+    while ( true )
+    {
+        /* call RTOS tsk execution function */
+        RTOS_executeTask();
+    }
+
+    /* Execution should not come here during normal operation */
+    
+    return ( EXIT_FAILURE );
+}
+
+
+

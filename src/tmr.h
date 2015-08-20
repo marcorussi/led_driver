@@ -35,7 +35,7 @@
 //TODO: modify the timer setup (remove TMR_UL_TICK_PERIOD_US)
 
 
-#include "../fw_common.h"
+#include "fw_common.h"
 
 
 /* Exported defines */

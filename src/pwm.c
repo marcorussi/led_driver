@@ -35,8 +35,8 @@
 #include <xc.h>
 #include <sys/attribs.h>
 #include "p32mx795f512l.h"
-#include "../fw_common.h"
-#include "../sal/sys/sys.h"
+#include "fw_common.h"
+#include "sys.h"
 #include "pwm.h"
 
 #include "port.h"

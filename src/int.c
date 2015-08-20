@@ -22,7 +22,7 @@
 */
 
 /*
- * This file pwm.h represents the header file of the PWM component.
+ * This file int.c represents the source file of the interrupt component.
  *
  * Author : Marco Russi
  *
@@ -32,26 +32,18 @@
 */
 
 
+#include "p32mx795f512l.h"
 #include "fw_common.h"
 
+#include "int.h"
 
-/* PWM channels enum */
-typedef enum
+
+/* Enable global interrupts */
+EXPORTED void INT_EnableInt( void )
 {
-    PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_1 = PWM_KE_FIRST_CHANNEL,
-    PWM_KE_CHANNEL_2,
-    PWM_KE_CHANNEL_3,
-    PWM_KE_CHANNEL_4,
-    PWM_KE_LAST_CHANNEL = PWM_KE_CHANNEL_4,
-    PWM_KE_CHANNEL_CHECK
-} PWM_ke_Channels;
+    /* multi vector */
+    INTCONbits.MVEC = 1;
 
-
-
-
-EXTERN void PWM_Init( void );
-
-EXTERN void PWM_SetFrequency( uint32 );
-
-EXTERN void PWM_SetDutyCycle( PWM_ke_Channels, uint16 );
+    /* enable interrupts */
+    asm("ei");
+}
